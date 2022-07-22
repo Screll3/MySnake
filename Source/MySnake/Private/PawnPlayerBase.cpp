@@ -3,8 +3,8 @@
 
 #include "PawnPlayerBase.h"
 #include "Engine/Classes/Camera/CameraComponent.h"
-#include "SnakeBase.h"
 #include "Components/InputComponent.h"
+#include "SnakeBase.h"
 
 // Sets default values
 APawnPlayerBase::APawnPlayerBase()
@@ -26,11 +26,20 @@ void APawnPlayerBase::BeginPlay()
 	
 }
 
+void APawnPlayerBase::CreateSnakeActor()
+{
+	SnakeActor = GetWorld()->SpawnActor<ASnakeBase>(SnakeActorClass, FTransform());
+}
+
 // Called every frame
 void APawnPlayerBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	//if (IsValid(SnakeActor))
+	//{
+	//	FVector TempVector = SnakeActor->SnakeElements[0]->GetActorLocation();
+	//	SetActorLocation(FVector(TempVector.X - 1500.f, TempVector.Y, TempVector.Z + 1500.f));
+	//}
 }
 
 // Called to bind functionality to input
@@ -42,10 +51,6 @@ void APawnPlayerBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	PlayerInputComponent->BindAxis("LEFT", this, &APawnPlayerBase::HandlePlayerXInput);
 }
 
-void APawnPlayerBase::CreateSnakeActor()
-{
-	SnakeActor = GetWorld()->SpawnActor<ASnakeBase>(SnakeActorClass, FTransform());
-}
 
 void APawnPlayerBase::HandlePlayerYInput(float Value)
 {
